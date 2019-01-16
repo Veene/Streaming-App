@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { signIn, signOut} from '../actions'
 
 class GoogleAuth extends React.Component {
   state = {
@@ -15,16 +17,20 @@ class GoogleAuth extends React.Component {
       }).then(() => {
         //add auth to GoogleAuth class
         this.auth = window.gapi.auth2.getAuthInstance()
-        //with this setState we can monitor when we need component to re-render (when it changes to true)
-        this.onAuthChange()
-        //set up eventlistener built in google
+        //gets true or false
+        this.onAuthChange(this.auth.isSignedIn.get())
+        //set up eventlistener built in google will trigger this.onAuthChange with adding argument true or false
         this.auth.isSignedIn.listen(this.onAuthChange)
       })
     })
   }
-  //because its a callback function requires arrow to bind this
-  onAuthChange = () => {
-    this.setState({ isSignedIn: this.auth.isSignedIn.get()})
+  // received a boolean from this.auth.isSignedIn.listen
+  onAuthChange = (isSignedIn) => {
+    if(isSignedIn) {
+      this.props.signIn()
+    } else {
+      this.props.signOut()
+    }
   }
   onSignInClick = () => {
     this.auth.signIn()
@@ -33,9 +39,9 @@ class GoogleAuth extends React.Component {
     this.auth.signOut()
   }
   renderAuthButton() {
-    if(this.state.isSignedIn === null) {
+    if(this.props.isSignedIn === null) {
       return null
-    } else if (this.state.isSignedIn) {
+    } else if (this.props.isSignedIn) {
       return (
         <button 
         className="ui red google button"
@@ -67,4 +73,9 @@ class GoogleAuth extends React.Component {
     )
   }
 }
-export default GoogleAuth
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn: state.auth.isSignedIn
+  }
+}
+export default connect(mapStateToProps, {signIn, signOut})(GoogleAuth)
