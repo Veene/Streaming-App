@@ -27,7 +27,8 @@ class GoogleAuth extends React.Component {
   // received a boolean from this.auth.isSignedIn.listen
   onAuthChange = (isSignedIn) => {
     if(isSignedIn) {
-      this.props.signIn()
+      //passing the id to the action creator who will payload pass it to reducer
+      this.props.signIn(this.auth.currentUser.get().getId())
     } else {
       this.props.signOut()
     }
