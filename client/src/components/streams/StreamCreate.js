@@ -3,6 +3,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { createStream } from '../../actions'
+import { Redirect } from 'react-router-dom'
 
 class StreamCreate extends React.Component {
   //formprops have all the functions (onChange etc,) also value, but it is up to us to make the final connections

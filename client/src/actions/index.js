@@ -1,4 +1,5 @@
 import streams from '../apis/stream'
+import history from '../history'
 import { SIGN_IN, SIGN_OUT, CREATE_STREAM, DELETE_STREAM, FETCH_STREAM, FETCH_STREAMS, EDIT_STREAM } from './types'
 
 export const signIn = (id) => {
@@ -13,18 +14,19 @@ export const signOut = () => {
   }
 }
 
-//this is redux thunk boilerplate for action creator
-export const createStream = (formValues) => {
-  return async (dispatch) => {
-    const response = await streams.post('/streams', formValues)
-
-    //here we are directly dispatching instead of calling dispatch(action -> which returns the type:'' payload:'')
-    dispatch({
-      type: CREATE_STREAM,
-      payload: response.data
-    })
-  }
+//this is redux thunk boilerplate for action creator, remember the actions creator is a function that calls function async with args 
+//dispatch and getState and then automatically dispatches that inner func
+export const createStream = (formValues) => async (dispatch, getState) => {
+  const { id } = getState().auth
+  const response = await streams.post('/streams', {...formValues, userId: id})
+  dispatch({
+    type: CREATE_STREAM,
+    payload: response.data
+  })
+  //do some programmatic navigation to get the user back to root route
+  history.push('/')
 }
+
 //get list of streams
 export const fetchStreams = () => async dispatch => {
   const response = await streams.get('/streams')

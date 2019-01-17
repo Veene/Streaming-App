@@ -1,19 +1,27 @@
 {
   "streams": [
     {
-      "title": "My Stream",
-      "description": "this description",
-      "id": 1
+      "title": "I created this stream",
+      "description": "this was made by me",
+      "id": 5
     },
     {
-      "title": "My Stream2",
-      "description": "this description",
-      "id": 2
+      "title": "second try ",
+      "description": "made by me",
+      "userId": "117006297804750683115",
+      "id": 6
     },
     {
-      "title": "test",
+      "title": "programmatic navigation test",
       "description": "test",
-      "id": 3
+      "userId": "117006297804750683115",
+      "id": 7
+    },
+    {
+      "title": "test1",
+      "description": "test1",
+      "userId": "117006297804750683115",
+      "id": 8
     }
   ]
 }
