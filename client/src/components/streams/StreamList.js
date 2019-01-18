@@ -35,7 +35,7 @@ class StreamList extends React.Component {
     if(this.props.isSignedIn) {
       return (
         <div>
-          <Link className="ui button primary right floated" to="/new">
+          <Link className="ui button primary right floated" to="/streams/new">
             CREATE STREAM
           </Link>
         </div>
