@@ -53,4 +53,6 @@ export const deleteStream = (id) => async dispatch => {
   await streams.delete(`/streams/${id}`)
 
   dispatch({ type: DELETE_STREAM, payload: id})
+  //do some programmatic navigation to get the user back to root route
+  history.push('/')
 }
