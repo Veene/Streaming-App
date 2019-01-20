@@ -1,22 +1,52 @@
 import React from 'react'
+import flv from 'flv.js'
 import { connect } from 'react-redux'
 import { fetchStream } from '../../actions'
 
 class StreamShow extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.videoRef = React.createRef()
+  }
   componentDidMount() {
-    this.props.fetchStream(this.props.match.params.id)
+    const { id } = this.props.match.params
+  
+    this.props.fetchStream(id)
+    this.buildPlayer()
+  }
+  componentDidUpdate() {
+    //just in case there was some error with loading we do a second try to load, (notice this.buildplayer())
+    this.buildPlayer()
+  }
+  componentWillUnmount() {
+    //remember to destroy the attachMediaElement + load
+    this.player.destroy()
+  }
+  buildPlayer() {
+    if(this.player || !this.props.stream) {
+      return
+    }
+    const { id } = this.props.match.params
+
+    this.player = flv.createPlayer({
+      type: 'flv',
+      url: `http://localhost:8000/live/${id}.flv`
+    })
+    this.player.attachMediaElement(this.videoRef.current)
+    this.player.load()
+
   }
   render() {
     if(!this.props.stream) {
       return <div>LOADING..</div>
     }
-    console.log(this.props)
-    console.log(this.props.stream)
     const { title, description } = this.props.stream
     return ( 
       <div>
-       <h2>{title}</h2>
-       <p>{description}</p>
+        <video ref={this.videoRef} style={{ width: '100%' }} controls/>
+        <h2>{title}</h2>
+        <p>{description}</p>
       </div>
     )
   }

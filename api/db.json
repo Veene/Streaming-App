@@ -1,16 +1,6 @@
 {
   "streams": [
     {
-      "title": "I created this stream",
-      "description": "this was made by me",
-      "id": 5
-    },
-    {
-      "title": "test2",
-      "description": "test2",
-      "id": 8
-    },
-    {
       "title": "First test of StreamForm lets go!",
       "description": "LETS GO PATCH TIME",
       "userId": "117006297804750683115",
@@ -21,6 +11,12 @@
       "description": "test1",
       "userId": "117006297804750683115",
       "id": 10
+    },
+    {
+      "title": "John playing league",
+      "description": "LEAGUE TIME",
+      "userId": "117006297804750683115",
+      "id": 11
     }
   ]
 }
